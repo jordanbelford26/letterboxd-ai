@@ -115,14 +115,14 @@ function setupFileInput(inputId, dropId, nameId, statusId, type) {
 
 /* ── Stats panel ────────────────────────────────────────────────────────── */
 const SUGGESTED_PROMPTS = [
-  'What are the patterns in my taste?',
-  'Which directors should I explore next?',
-  'What's a perfect film I'd give 5 stars to?',
-  'Roast my film taste, be honest.',
-  'What genre am I clearly obsessed with?',
-  'Give me a double feature for tonight.',
-  'What's a hidden gem I'd probably love?',
-  'Which of my 5-star films is the most underrated?',
+  "What are the patterns in my taste?",
+  "Which directors should I explore next?",
+  "What's a perfect film I'd give 5 stars to?",
+  "Roast my film taste, be honest.",
+  "What genre am I clearly obsessed with?",
+  "Give me a double feature for tonight.",
+  "What's a hidden gem I'd probably love?",
+  "Which of my 5-star films is the most underrated?",
 ];
 
 function updateStats() {

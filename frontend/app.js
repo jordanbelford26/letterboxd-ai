@@ -2,7 +2,7 @@
 // Change this to your Railway URL after deploy; keep localhost for local dev
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:3000'
-  : 'https://YOUR-RAILWAY-APP.up.railway.app';  // ← update after Railway deploy
+  : 'https://letterboxd-ai-production.up.railway.app';
 
 /* ── State ──────────────────────────────────────────────────────────────── */
 const state = {

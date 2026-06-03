@@ -339,18 +339,26 @@ $input.addEventListener('keydown', e => {
 $sendBtn.addEventListener('click', () => sendMessage());
 
 /* ── Backend health check ────────────────────────────────────────────────── */
-async function checkBackend() {
+async function checkBackend(attempt = 1) {
   try {
-    const r = await fetch(`${API_BASE}/api/health`, { signal: AbortSignal.timeout(4000) });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    const r = await fetch(`${API_BASE}/api/health`, { signal: controller.signal });
+    clearTimeout(timer);
     if (r.ok) {
       $backendStatus.textContent = '● backend connected';
       $backendStatus.className   = 'backend-status ok';
     } else {
-      throw new Error(r.status);
+      throw new Error(`HTTP ${r.status}`);
     }
-  } catch {
-    $backendStatus.textContent = '● backend offline';
-    $backendStatus.className   = 'backend-status error';
+  } catch (err) {
+    if (attempt < 3) {
+      // Retry up to 3× — Railway may be cold-starting
+      setTimeout(() => checkBackend(attempt + 1), 3000);
+    } else {
+      $backendStatus.textContent = '● backend offline';
+      $backendStatus.className   = 'backend-status error';
+    }
   }
 }
 

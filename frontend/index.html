@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letterboxd AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="layout">
+
+    <!-- ── Sidebar ───────────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">🎬</span>
+        <div>
+          <div class="logo-title">Letterboxd AI</div>
+          <div class="logo-sub">Your personal cinephile</div>
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="upload-section">
+        <div class="upload-label">Upload your Letterboxd exports</div>
+        <div class="upload-hint">
+          Settings → Import &amp; Export → Export Your Data
+        </div>
+
+        <label class="file-drop" id="dropRatings" for="fileRatings">
+          <span class="file-icon">★</span>
+          <span class="file-name" id="nameRatings">ratings.csv</span>
+          <span class="file-status" id="statusRatings">drop or click</span>
+          <input type="file" id="fileRatings" accept=".csv" hidden>
+        </label>
+
+        <label class="file-drop" id="dropWatchlist" for="fileWatchlist">
+          <span class="file-icon">◷</span>
+          <span class="file-name" id="nameWatchlist">watchlist.csv</span>
+          <span class="file-status" id="statusWatchlist">drop or click</span>
+          <input type="file" id="fileWatchlist" accept=".csv" hidden>
+        </label>
+
+        <label class="file-drop" id="dropWatched" for="fileWatched">
+          <span class="file-icon">✓</span>
+          <span class="file-name" id="nameWatched">watched.csv</span>
+          <span class="file-status" id="statusWatched">drop or click</span>
+          <input type="file" id="fileWatched" accept=".csv" hidden>
+        </label>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats" id="stats" hidden>
+        <div class="stats-title">Your library</div>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-value" id="statRated">—</div>
+            <div class="stat-label">rated</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statAvg">—</div>
+            <div class="stat-label">avg ★</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statWatchlist">—</div>
+            <div class="stat-label">watchlist</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statWatched">—</div>
+            <div class="stat-label">watched</div>
+          </div>
+        </div>
+        <div class="top-rated" id="topRated"></div>
+      </div>
+
+      <!-- Suggested prompts -->
+      <div class="prompts-section" id="promptsSection" hidden>
+        <div class="prompts-title">Ask me…</div>
+        <div class="prompts-list" id="promptsList"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div id="backendStatus" class="backend-status checking">● checking backend…</div>
+      </div>
+    </aside>
+
+    <!-- ── Main chat ──────────────────────────────────────────────── -->
+    <main class="chat-area">
+      <div class="messages" id="messages">
+        <div class="welcome">
+          <div class="welcome-title">
+            <em>Lights, camera,</em> conversation.
+          </div>
+          <div class="welcome-body">
+            Upload your Letterboxd CSV exports on the left to get started.
+            I'll analyse your taste and we can talk about films all day.
+          </div>
+        </div>
+      </div>
+
+      <div class="input-bar">
+        <textarea
+          id="chatInput"
+          placeholder="Ask about your films…"
+          rows="1"
+          autocomplete="off"
+          spellcheck="false"
+        ></textarea>
+        <button id="sendBtn" title="Send (Enter)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -5,10 +5,24 @@ const API_BASE = window.location.hostname === 'localhost' || window.location.hos
   : 'https://letterboxd-ai-production.up.railway.app';
 
 /* ── State ──────────────────────────────────────────────────────────────── */
+const MAX_STORED_MESSAGES = 50;
+const STORAGE_KEY = 'lbd_chat_history';
+
+function loadHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch { return []; }
+}
+
+function saveHistory(history) {
+  const trimmed = history.slice(-MAX_STORED_MESSAGES);
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed)); } catch {}
+}
+
 const state = {
-  movieData:  null,   // { ratings, watchlist, watched }
-  history:    [],     // [{ role, content }] for Claude context
-  streaming:  false,
+  movieData: null,
+  history:   loadHistory(),
+  streaming: false,
 };
 
 /* ── DOM refs ───────────────────────────────────────────────────────────── */
@@ -312,10 +326,10 @@ async function sendMessage(text) {
 
     const finalText = finaliseStream(assistantBubble);
 
-    // Update conversation history for multi-turn context
+    // Update and persist conversation history
     state.history.push({ role: 'user', content: message });
     state.history.push({ role: 'assistant', content: finalText });
-    if (state.history.length > 40) state.history = state.history.slice(-40);
+    saveHistory(state.history);
 
   } catch (err) {
     finaliseStream(assistantBubble);
@@ -372,6 +386,11 @@ setupFileInput('fileRatings',   'dropRatings',   'nameRatings',   'statusRatings
 setupFileInput('fileWatchlist', 'dropWatchlist', 'nameWatchlist', 'statusWatchlist', 'watchlist');
 setupFileInput('fileWatched',   'dropWatched',   'nameWatched',   'statusWatched',   'watched');
 setupFileInput('fileLikes',     'dropLikes',     'nameLikes',     'statusLikes',     'likes');
+
+// Restore persisted chat history into the DOM
+if (state.history.length > 0) {
+  state.history.forEach(msg => appendMessage(msg.role, msg.content));
+}
 
 checkBackend();
 $input.focus();

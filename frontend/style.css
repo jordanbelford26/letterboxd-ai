@@ -119,6 +119,39 @@ body {
 .file-status { font-size: 0.68rem; color: var(--muted); white-space: nowrap; }
 .file-drop.loaded .file-status { color: var(--gold); }
 
+/* How to use */
+.howto {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.howto-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+.howto-steps {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.howto-steps li {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+.howto-steps li strong { color: var(--text); font-weight: 500; }
+.howto-steps li code {
+  background: var(--surface-3);
+  color: var(--gold);
+  padding: 0 5px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+}
+
 /* Stats */
 .stats { border-top: 1px solid var(--border); padding-top: 16px; }
 .stats-title {

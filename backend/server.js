@@ -16,8 +16,8 @@ function buildSystemPrompt(movieData) {
   const ratings   = movieData.ratings   || [];
   const watchlist = movieData.watchlist || [];
   const watched   = movieData.watched   || [];
+  const likes     = movieData.likes     || [];
 
-  // Sort ratings descending so highest-rated films are most prominent in context
   const sortedRatings = [...ratings].sort((a, b) => (b.rating || 0) - (a.rating || 0));
 
   const ratingLines = sortedRatings.map(m =>
@@ -33,6 +33,8 @@ function buildSystemPrompt(movieData) {
     .slice(0, 150)
     .map(m => `- ${m.name} (${m.year})`)
     .join('\n');
+
+  const likesLines = likes.slice(0, 200).map(m => `- ${m.name} (${m.year})`).join('\n');
 
   // Taste summary for Claude
   const avgRating = ratings.length
@@ -58,12 +60,14 @@ Total rated:     ${ratings.length} films
 Average rating:  ${avgRating ? avgRating + ' / 5' : 'n/a'}
 Watchlist:       ${watchlist.length} films
 Watched total:   ${watched.length} films
+Liked films:     ${likes.length} films
 Top decades:     ${topDecades || 'n/a'}
 
 ═══ RATED FILMS (sorted by rating) ═══
 ${ratingLines || 'None uploaded yet.'}
 ${watchlistLines ? `\n═══ WATCHLIST ═══\n${watchlistLines}` : ''}
 ${watchedLines ? `\n═══ WATCHED (unrated) ═══\n${watchedLines}` : ''}
+${likesLines ? `\n═══ LIKED FILMS (♥) ═══\n${likesLines}` : ''}
 
 ═══ INSTRUCTIONS ═══
 - Speak like a fellow film lover, not a database query engine.

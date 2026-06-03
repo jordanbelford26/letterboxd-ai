@@ -90,8 +90,11 @@ function setupFileInput(inputId, dropId, nameId, statusId, type) {
       } else if (type === 'watchlist') {
         state.movieData.watchlist = normaliseList(rows);
         statEl.textContent = `${rows.length} films`;
-      } else {
+      } else if (type === 'watched') {
         state.movieData.watched = normaliseList(rows);
+        statEl.textContent = `${rows.length} films`;
+      } else {
+        state.movieData.likes = normaliseList(rows);
         statEl.textContent = `${rows.length} films`;
       }
 
@@ -131,9 +134,11 @@ function updateStats() {
   if (!ratings.length && !watchlist.length && !watched.length) return;
 
   $stats.hidden = false;
+  const likes = state.movieData.likes || [];
   document.getElementById('statRated').textContent     = ratings.length;
   document.getElementById('statWatchlist').textContent = watchlist.length;
   document.getElementById('statWatched').textContent   = watched.length;
+  document.getElementById('statLikes').textContent     = likes.length || '—';
 
   const avg = ratings.length
     ? (ratings.reduce((s, m) => s + (m.rating || 0), 0) / ratings.length).toFixed(1)
@@ -366,6 +371,7 @@ async function checkBackend(attempt = 1) {
 setupFileInput('fileRatings',   'dropRatings',   'nameRatings',   'statusRatings',   'ratings');
 setupFileInput('fileWatchlist', 'dropWatchlist', 'nameWatchlist', 'statusWatchlist', 'watchlist');
 setupFileInput('fileWatched',   'dropWatched',   'nameWatched',   'statusWatched',   'watched');
+setupFileInput('fileLikes',     'dropLikes',     'nameLikes',     'statusLikes',     'likes');
 
 checkBackend();
 $input.focus();

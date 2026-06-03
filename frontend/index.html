@@ -52,6 +52,13 @@
           <span class="file-status" id="statusWatched">drop or click</span>
           <input type="file" id="fileWatched" accept=".csv" hidden>
         </label>
+
+        <label class="file-drop" id="dropLikes" for="fileLikes">
+          <span class="file-icon">♥</span>
+          <span class="file-name" id="nameLikes">likes/films.csv</span>
+          <span class="file-status" id="statusLikes">drop or click</span>
+          <input type="file" id="fileLikes" accept=".csv" hidden>
+        </label>
       </div>
 
       <!-- Stats -->
@@ -73,6 +80,10 @@
           <div class="stat">
             <div class="stat-value" id="statWatched">—</div>
             <div class="stat-label">watched</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="statLikes">—</div>
+            <div class="stat-label">liked ♥</div>
           </div>
         </div>
         <div class="top-rated" id="topRated"></div>
